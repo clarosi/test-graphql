@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
@@ -14,6 +15,7 @@
     "mongoose": "^5.4.14"
   },
   "devDependencies": {
+    "eslint": "^5.14.1",
     "nodemon": "^1.18.10"
   },
   "scripts": {
@@ -21,11 +23,5 @@
     "start": "nodemon server.js"
   },
   "author": "Ian R. Claros",
-  "license": "MIT",
-  "prettier": {
-    "trailingComma": "es5",
-    "tabWidth": 2,
-    "semi": true,
-    "singleQuote": true
-  }
+  "license": "MIT"
 }
