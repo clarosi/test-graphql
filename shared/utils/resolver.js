@@ -1,3 +1,6 @@
+const User = require("../../model/user");
+const Event = require("../../model/event");
+
 const user = userId => {
   return User.findById(userId)
     .then(result => {

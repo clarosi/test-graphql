@@ -2,10 +2,12 @@ const Booking = require("../../model/booking");
 const error = require("../../shared/utils/error");
 
 const { toISOSDate } = require("../../shared/utils/date");
-const { user, event } = require("../../shared/utils/resolverHelper");
+const { user, event } = require("../../shared/utils/resolver");
+const { checkAuth } = require("../../shared/utils/auth");
 
 module.exports = {
-  bookings: () => {
+  bookings: req => {
+    checkAuth(req);
     return Booking.find()
       .then(result => {
         return result.map(obj => {
@@ -23,10 +25,11 @@ module.exports = {
         error.customError(err.message, 500);
       });
   },
-  bookEvent: args => {
+  bookEvent: (args, req) => {
+    checkAuth(req);
     const booking = Booking({
       ...args.bookingInput,
-      userId: "5c74ee5e3fb3e72fb537681b"
+      userId: req.userId
     });
     return booking
       .save()
@@ -45,7 +48,8 @@ module.exports = {
         error.customError(err.message, 500);
       });
   },
-  cancelBooking: args => {
+  cancelBooking: (args, req) => {
+    checkAuth(req);
     const bookingId = args.bookingId;
     return Booking.findByIdAndDelete(bookingId)
       .then(result => {

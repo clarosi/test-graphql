@@ -5,8 +5,9 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 
 const graphqlSchema = require("./graphql/schema/index");
-const graphqlResolvers = require("./graphql/resolver/index");
+const graphqlResolver = require("./graphql/resolver/index");
 const error = require("./shared/utils/error");
+const isAuth = require("./middleware/auth");
 
 const app = express();
 
@@ -23,6 +24,8 @@ app.use("/public", express.static(path.join(__dirname, "public")));
 // Fix CORS error
 app.use(cors());
 
+app.use(isAuth);
+
 // Routes
 app.get("/", (req, res, next) => {
   res.status(200).json({ message: "Welcome to graphQL server." });
@@ -32,7 +35,7 @@ app.use(
   "/graphql",
   graphqlHttp({
     schema: graphqlSchema,
-    rootValue: graphqlResolvers,
+    rootValue: graphqlResolver,
     graphiql: process.env.ENVINRONMENT === "PRO" ? false : true
   })
 );

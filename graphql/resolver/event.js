@@ -4,10 +4,12 @@ const Booking = require("../../model/booking");
 
 const error = require("../../shared/utils/error");
 const { toISOSDate } = require("../../shared/utils/date");
-const { user, event } = require("../../shared/utils/resolverHelper");
+const { user, event } = require("../../shared/utils/resolver");
+const { checkAuth } = require("../../shared/utils/auth");
 
 module.exports = {
-  events: () => {
+  events: req => {
+    checkAuth(req);
     return Event.find()
       .then(result => {
         return result.map(obj => {
@@ -23,17 +25,18 @@ module.exports = {
         error.customError(err.message, 500);
       });
   },
-  createEvent: args => {
+  createEvent: (args, req) => {
+    checkAuth(req);
     const event = Event({
       ...args.eventInput,
-      creator: "5c73aacc47f9eb75b5100cc5"
+      creator: req.userId
     });
     let createdEvent;
     return event
       .save()
       .then(result => {
         createdEvent = result;
-        return User.findById("5c73aacc47f9eb75b5100cc5");
+        return User.findById(req.userId);
       })
       .then(result => {
         if (!result) {
@@ -51,10 +54,11 @@ module.exports = {
         error.customError(err.message, 500);
       });
   },
-  bookEvent: args => {
+  bookEvent: (args, req) => {
+    checkAuth(req);
     const booking = Booking({
       ...args.bookingInput,
-      userId: "5c74ee5e3fb3e72fb537681b"
+      userId: req.userId
     });
     return booking
       .save()
