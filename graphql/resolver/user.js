@@ -24,10 +24,10 @@ module.exports = {
       })
       .catch(err => {
         console.log(err.message);
-        error.customError(err.message, 500);
+        error.customError(err.message, err.statusCode);
       });
   },
-  login: ({ email, password }) => {
+  login: ({ email, password }, next) => {
     let userId;
     return User.findOne({ email })
       .then(result => {
@@ -54,8 +54,8 @@ module.exports = {
         };
       })
       .catch(err => {
-        console.log(err.message);
-        error.customError(err.message, 500);
+        console.log(err.message, err.statusCode);
+        error.customError(err.message, err.statusCode);
       });
   }
 };

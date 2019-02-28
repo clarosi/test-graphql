@@ -4,12 +4,12 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
   {
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-      minLength: 5
-    },
+    // name: {
+    //   type: String,
+    //   required: true,
+    //   trim: true,
+    //   minLength: 5
+    // },
     email: {
       type: String,
       required: true,

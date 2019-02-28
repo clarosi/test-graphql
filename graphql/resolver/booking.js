@@ -22,7 +22,7 @@ module.exports = {
       })
       .catch(err => {
         console.log(err.message);
-        error.customError(err.message, 500);
+        error.customError(err.message, err.statusCode);
       });
   },
   bookEvent: (args, req) => {
@@ -45,7 +45,7 @@ module.exports = {
       })
       .catch(err => {
         console.log(err.message);
-        error.customError(err.message, 500);
+        error.customError(err.message, err.statusCode);
       });
   },
   cancelBooking: (args, req) => {
@@ -64,7 +64,7 @@ module.exports = {
       })
       .catch(err => {
         console.log(err.message);
-        error.customError(err.message, 500);
+        error.customError(err.message, err.statusCode);
       });
   }
 };

@@ -22,7 +22,7 @@ module.exports = {
       })
       .catch(err => {
         console.log(err.message);
-        error.customError(err.message, 500);
+        error.customError(err.message, err.statusCode);
       });
   },
   createEvent: (args, req) => {
@@ -40,7 +40,7 @@ module.exports = {
       })
       .then(result => {
         if (!result) {
-          error.customError("User not found.", 500);
+          error.customError("User not found.", 404);
         }
         result.createdEvents.push(event._id);
         return result.save();
@@ -51,7 +51,7 @@ module.exports = {
       })
       .catch(err => {
         console.log(err.message);
-        error.customError(err.message, 500);
+        error.customError(err.message, err.statusCode);
       });
   },
   bookEvent: (args, req) => {
@@ -74,7 +74,7 @@ module.exports = {
       })
       .catch(err => {
         console.log(err.message);
-        error.customError(err.message, 500);
+        error.customError(err.message, err.statusCode);
       });
   }
 };
